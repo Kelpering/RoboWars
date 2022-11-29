@@ -65,93 +65,143 @@ var highscore = localStorage.getItem("highscore") || 0;
     if (window.confirm("play again?")){startGame();} else {window.alert("Thanks for playing!")};
 }
 // fight function (now with parameter for enemy's object holding name, health, and attack values)
-    var fight = function() {
+    var fight = function(enemy) {
   // keep track of who goes first
-
+      var isPlayerTurn = true;
 
   // randomly change turn order
+      if (Math.random() < 0.5) {
+        isPlayerTurn=false;}
 
+        while (playerInfo.health > 0 && enemy.health > 0){
+          if (isPlayerTurn){
 
       // ask user if they'd like to fight or skip using fightOrSkip function
-
+            if(fightOrSkip()){
         // if true, leave fight by taking them to the shop and breaking loop
-
-
+              shop();
+              break;
+            }
+              var damage = random(PlayerInfo.attack - 3, PlayeInfo.attack);
       // remove enemy's health by subtracting the amount we set in the damage variable
-
+              enemy.health = Math.max(enemy.health - damage);
+              console.log(playerinfo.name + " attacked " + enemy.name + ". Enemy has: " + enemy.health);
 
       // check enemy's health
-
-
+            if(enemy.health < 0){
+              window.alert(enemy.name + " died");
+              
         // award player money for winning
-
+        playerInfo.money += 20;
 
         // ask if user wants to use the store before next round
-
+              if(window.confirm("Would you like to visit the store?")) {
 
         // if yes, take them to the store() function
-
-
+                shop();
+              }
         // leave while() loop since enemy is dead
-
-
-      // remove enemy's health by subtracting the amount we set in the damage variable
-
+                break;
+            } else {window.alert(enemy.name + "still has " + enemy.health + " health.")}
+          }
+          else{
+      // remove players's health by subtracting the amount we set in the damage variable
+      var damage = random(enemy.attack - 3, enemy.attack);
+      PlayerInfo -= damage;
+      console.log(enemy.name + " attacked " + player.name + ". Enemy has: " + playerInfo.health);
 
       // check player's health
-
-
+            if (playerinfo.health < 0){
+              window.alert(enemy.name + " died");
+              break;
+          }
+          else{
+            window.alert(playerinfo.name + " still has " + player.health + " health.")
+          }
       // player gets attacked first
- 
+
 
 
       // remove enemy's health by subtracting the amount we set in the damage variable
-
+      var damage = random(PlayerInfo.attack - 3, PlayeInfo.attack);
+              enemy.health = Math.max(enemy.health - damage);
+              console.log(playerinfo.name + " attacked " + enemy.name + ". Enemy has: " + enemy.health);
 
       // check player's health
-
+if (playerinfo.health < 0) {
         // leave while() loop if player is dead
+  window.alert("u ded")
+  break;}
 
-
-
+if(fightOrSkip){
         // if true, leave fight by taking them to the shop and breaking loop
-
-
+  shop();
+  break;
+}
 
 
       // remove enemy's health by subtracting the amount we set in the damage variable
-
+      var damage = random(PlayerInfo.attack - 3, PlayeInfo.attack);
+              enemy.health = Math.max(enemy.health - damage);
+              console.log(playerinfo.name + " attacked " + enemy.name + ". Enemy has: " + enemy.health);
 
       // check enemy's health
-
+      if(enemy.health < 0){
 
         // award player money for winning
-
+        playerinfo.money +=20;
 
         // ask if user wants to use the store before next round
-
+        if(confirm("go to shop?"))
+        {
+          
 
         // if yes, take them to the store() function
-
+        shop();
+      }
 
         // leave while() loop since enemy is dead
-
+      break;
+    } else{
+      window.alert("enemy has " + enemy.health + "health");
     // switch turn order for next round
-
+isplayerTurn + !isplayerTurn
+    }
+  }
 
 // go to shop between battles function
-
+  var shop = function () {
   // ask player what they'd like to do
-
+    var choice = window.prompt("Refill, Upgrade, Leave (case sensitive)");
 
   // check if prompt answer was left blank, user hit "cancel", or provided a number instead
-
+    if(choice === null || choice === "" || !isNaN(choice)){window.alert("provide valid answer")
+  // return shop();
+  shop();
+  }
 
   // convert answer from last prompt to lower case
-
+  choice = choice.toLowerCase();
 
   // use switch case to carry out action
+switch (choice) {
+  case "refill":
+    playerInfo.refillHealth();
+    break;
+  case "upgrade":
+  playerInfo.upgradeAttack();
+    break;
+  case "Leave":
+  window.alert("Leaving shop......................");
+    break;
 
+  default:
+    window.alert("provide correct answer, you picked: " + choice);
+    shop();
+    break;
+}
+
+  }
 
 // function to set name
 
