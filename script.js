@@ -38,7 +38,7 @@ var startGame = function() {
   // after loop ends, we are either out of player.health or enemies to fight, so run the endGame function
         
     endGame();
-
+      }
 // function to end the entire game
 
 var endGame = function() {
@@ -167,7 +167,7 @@ if(fightOrSkip){
     // switch turn order for next round
 isplayerTurn + !isplayerTurn
     }
-  }
+  }}}
 
 // go to shop between battles function
   var shop = function () {
@@ -204,34 +204,55 @@ switch (choice) {
   }
 
 // function to set name
+var getName = function() {
+  var name = "";
+  while (name==="" || name===null)
+  {
+    name = prompt("Input name: ");
 
+    console.log(name);
+  }
+}
 
 // function to generate a random numeric value
 
+var random = function(min, max) {
+  var value=Math.floor(Math.random()*(max-min) +min)
+  return value;
+}
 
 // function to check if player wants to fight or skip
-
+var fightOrSkip = function(){
   // ask user if they'd liked to fight or run
-
+var fightchoice = window.prompt("fight? (fight: 1, skip: 2)")
 
   // convert promptFight from a string to a number
-
+  fightchoice = parentInt(fightchoice);
 
 
     // confirm user wants to skip
-
+if (fightchoice === 2){
+  var reassure = window.confirm("skip?");
 
     // if yes (true), leave fight
-
+    if (reassure){
       // subtract money from playerMoney for skipping, but don't let them go into the negative
-
+      playerInfo.money -= Math.max(playerInfo.money - 10);
       // stop while() loop using break; and enter next fight
-
+      
       // return true if user wants to leave
-
+      return true;
+    }
+  }
+}
 
 /* END GAME FUNCTIONS */
-
+var PlayerInfo = {name:getName(), health:100, attack:10, money:10, reset:function(){this.health = 100; this.money=10; this.attack=10;}, refillHealth:function(){ if(this.money>=7){this.health+=20; this.money-=7; window.alert("healing 20 health")} else {window.alert("cant heal")}}, upgradeAttack:function(){if(this.money>=7){this.money-=7; this.attack+= 6;window.alert("upgrading attack")} else{window.alert("you are too poor to purchase attack")}}};
+var enemy = [
+  {name:"roberto", attack:random(10,14)}, 
+  {name:"amy", attack:random(10,14)}, 
+  {name:"roboman", attack:random(10,14)}
+];
 /* GAME INFORMATION / VARIABLES */
 
 
